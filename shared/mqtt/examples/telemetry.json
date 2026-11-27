@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "telemetry",
+  "gateway_id": "gw-01",
+  "gateway_boot_id": "0a0b0c0d0e0f1011",
+  "gateway_session_id": "1112131415161718",
+  "message_id": "0000000000000001",
+  "node_id": "node-01",
+  "historical": false,
+  "gateway_queue_age_ms": 20,
+  "last_hop_rssi_dbm": -62,
+  "frame": {
+    "v": 2,
+    "type": "telemetry",
+    "origin": 1,
+    "destination": 3,
+    "hops": 2,
+    "ttl": 0,
+    "boot_id": "0102030405060708",
+    "seq": 7,
+    "command_id": "0000000000000000",
+    "run_id": "0000000000000000",
+    "target_boot_id": "0000000000000000",
+    "payload": {
+      "adc_raw": 2400,
+      "moisture_pct": 35.5,
+      "quality": "valid",
+      "calibration_revision": 1,
+      "sample_age_ms": 0,
+      "uptime_ms": 12000
+    }
+  }
+}

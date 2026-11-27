@@ -1,0 +1,482 @@
+[
+  {
+    "name": "unsupported-schema-version",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 2,
+      "kind": "telemetry",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "unknown-gateway",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "telemetry",
+      "gateway_id": "gw-02",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "source-frame-not-two-hop",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "telemetry",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 0,
+        "ttl": 2,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "kind-frame-mismatch",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "heartbeat",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "numeric-64bit-id",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "start",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000004",
+      "node_id": "node-01",
+      "backend_epoch": "2122232425262728",
+      "command_id": 9007199254740993,
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "issued_at": "2026-11-27T12:00:00Z",
+      "expires_at": "2026-11-27T12:00:05Z",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "duration_ms": 15000,
+        "permit_budget_ms": 3000
+      }
+    }
+  },
+  {
+    "name": "hard-cap-exceeded",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "start",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000004",
+      "node_id": "node-01",
+      "backend_epoch": "2122232425262728",
+      "command_id": "2233445566778899",
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "issued_at": "2026-11-27T12:00:00Z",
+      "expires_at": "2026-11-27T12:00:05Z",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "duration_ms": 25001,
+        "permit_budget_ms": 3000
+      }
+    }
+  },
+  {
+    "name": "permit-budget-exceeded",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "permit",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000005",
+      "node_id": "node-01",
+      "backend_epoch": "2122232425262728",
+      "command_id": "2233445566778899",
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "issued_at": "2026-11-27T12:00:00Z",
+      "expires_at": "2026-11-27T12:00:05Z",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "permit_budget_ms": 3001
+      }
+    }
+  },
+  {
+    "name": "unknown-field",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "stop",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000006",
+      "node_id": "node-01",
+      "backend_epoch": "2122232425262728",
+      "command_id": "2233445566778899",
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "issued_at": "2026-11-27T12:00:00Z",
+      "expires_at": "2026-11-27T12:00:05Z",
+      "payload": {},
+      "force": true
+    }
+  },
+  {
+    "name": "invalid-rfc3339-time",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "start",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000004",
+      "node_id": "node-01",
+      "backend_epoch": "2122232425262728",
+      "command_id": "2233445566778899",
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "issued_at": "2026-11-27T12:00:00Z",
+      "expires_at": "tomorrow",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "duration_ms": 15000,
+        "permit_budget_ms": 3000
+      }
+    }
+  },
+  {
+    "name": "history-heartbeat",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "heartbeat",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000002",
+      "node_id": "node-01",
+      "historical": true,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "heartbeat",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "arm_nonce": "33445566778899aa",
+          "pump_output_on": false,
+          "fault_code": 0,
+          "calibration_revision": 1,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "null-valid-moisture",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "telemetry",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": null,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "numeric-invalid-moisture",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "telemetry",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": 20,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "sensor_fault",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "negative-gateway-queue-age",
+    "layer": "mqtt",
+    "message": {
+      "schema_version": 1,
+      "kind": "telemetry",
+      "gateway_id": "gw-01",
+      "gateway_boot_id": "0a0b0c0d0e0f1011",
+      "gateway_session_id": "1112131415161718",
+      "message_id": "0000000000000001",
+      "node_id": "node-01",
+      "historical": false,
+      "gateway_queue_age_ms": -1,
+      "last_hop_rssi_dbm": -62,
+      "frame": {
+        "v": 2,
+        "type": "telemetry",
+        "origin": 1,
+        "destination": 3,
+        "hops": 2,
+        "ttl": 0,
+        "boot_id": "0102030405060708",
+        "seq": 7,
+        "command_id": "0000000000000000",
+        "run_id": "0000000000000000",
+        "target_boot_id": "0000000000000000",
+        "payload": {
+          "adc_raw": 2400,
+          "moisture_pct": 35.5,
+          "quality": "valid",
+          "calibration_revision": 1,
+          "sample_age_ms": 0,
+          "uptime_ms": 12000
+        }
+      }
+    }
+  },
+  {
+    "name": "wrong-route",
+    "layer": "espnow",
+    "message": {
+      "v": 2,
+      "type": "start",
+      "origin": 1,
+      "destination": 3,
+      "hops": 0,
+      "ttl": 2,
+      "boot_id": "0102030405060708",
+      "seq": 7,
+      "command_id": "2233445566778899",
+      "run_id": "1122334455667788",
+      "target_boot_id": "0102030405060708",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "duration_ms": 15000,
+        "permit_budget_ms": 3000
+      }
+    }
+  },
+  {
+    "name": "wrong-ttl-hop-sum",
+    "layer": "espnow",
+    "message": {
+      "v": 2,
+      "type": "telemetry",
+      "origin": 1,
+      "destination": 3,
+      "hops": 1,
+      "ttl": 2,
+      "boot_id": "0102030405060708",
+      "seq": 7,
+      "command_id": "0000000000000000",
+      "run_id": "0000000000000000",
+      "target_boot_id": "0000000000000000",
+      "payload": {
+        "adc_raw": 2400,
+        "moisture_pct": 35.5,
+        "quality": "valid",
+        "calibration_revision": 1,
+        "sample_age_ms": 0,
+        "uptime_ms": 12000
+      }
+    }
+  },
+  {
+    "name": "zero-run-id",
+    "layer": "espnow",
+    "message": {
+      "v": 2,
+      "type": "start",
+      "origin": 3,
+      "destination": 1,
+      "hops": 0,
+      "ttl": 2,
+      "boot_id": "0102030405060708",
+      "seq": 7,
+      "command_id": "2233445566778899",
+      "run_id": "0000000000000000",
+      "target_boot_id": "0102030405060708",
+      "payload": {
+        "arm_nonce": "33445566778899aa",
+        "duration_ms": 15000,
+        "permit_budget_ms": 3000
+      }
+    }
+  }
+]

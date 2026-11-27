@@ -1,0 +1,14 @@
+{
+  "v": 2,
+  "type": "stop",
+  "origin": 3,
+  "destination": 1,
+  "hops": 0,
+  "ttl": 2,
+  "boot_id": "0102030405060708",
+  "seq": 7,
+  "command_id": "2233445566778899",
+  "run_id": "1122334455667788",
+  "target_boot_id": "0102030405060708",
+  "payload": {}
+}

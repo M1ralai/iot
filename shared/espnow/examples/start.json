@@ -1,0 +1,18 @@
+{
+  "v": 2,
+  "type": "start",
+  "origin": 3,
+  "destination": 1,
+  "hops": 0,
+  "ttl": 2,
+  "boot_id": "0102030405060708",
+  "seq": 7,
+  "command_id": "2233445566778899",
+  "run_id": "1122334455667788",
+  "target_boot_id": "0102030405060708",
+  "payload": {
+    "arm_nonce": "33445566778899aa",
+    "duration_ms": 15000,
+    "permit_budget_ms": 3000
+  }
+}

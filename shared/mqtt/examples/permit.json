@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "permit",
+  "gateway_id": "gw-01",
+  "gateway_boot_id": "0a0b0c0d0e0f1011",
+  "gateway_session_id": "1112131415161718",
+  "message_id": "0000000000000005",
+  "node_id": "node-01",
+  "backend_epoch": "2122232425262728",
+  "command_id": "2233445566778899",
+  "run_id": "1122334455667788",
+  "target_boot_id": "0102030405060708",
+  "issued_at": "2026-11-27T12:00:00Z",
+  "expires_at": "2026-11-27T12:00:05Z",
+  "payload": {
+    "arm_nonce": "33445566778899aa",
+    "permit_budget_ms": 3000
+  }
+}

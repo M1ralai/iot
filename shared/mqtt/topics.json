@@ -1,0 +1,63 @@
+{
+  "protocol": "MQTT 3.1.1",
+  "encoding": "UTF-8 JSON",
+  "clean_session": true,
+  "routes": [
+    {
+      "kind": "telemetry",
+      "topic": "irrigation/v1/gw-01/telemetry",
+      "publisher": "gateway",
+      "subscriber": "backend",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "heartbeat",
+      "topic": "irrigation/v1/gw-01/heartbeat",
+      "publisher": "gateway",
+      "subscriber": "backend",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "ack",
+      "topic": "irrigation/v1/gw-01/acks",
+      "publisher": "gateway",
+      "subscriber": "backend",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "start",
+      "topic": "irrigation/v1/gw-01/commands/node-01",
+      "publisher": "backend",
+      "subscriber": "gateway",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "permit",
+      "topic": "irrigation/v1/gw-01/commands/node-01",
+      "publisher": "backend",
+      "subscriber": "gateway",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "stop",
+      "topic": "irrigation/v1/gw-01/commands/node-01",
+      "publisher": "backend",
+      "subscriber": "gateway",
+      "qos": 1,
+      "retained": false
+    },
+    {
+      "kind": "status",
+      "topic": "irrigation/v1/gw-01/status",
+      "publisher": "gateway",
+      "subscriber": "backend",
+      "qos": 1,
+      "retained": true
+    }
+  ]
+}

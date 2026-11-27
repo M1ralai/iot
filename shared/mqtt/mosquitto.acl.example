@@ -1,0 +1,14 @@
+# Broker users must be provisioned separately. No passwords belong here.
+user gateway-gw-01
+topic write irrigation/v1/gw-01/telemetry
+topic write irrigation/v1/gw-01/heartbeat
+topic write irrigation/v1/gw-01/acks
+topic write irrigation/v1/gw-01/status
+topic read irrigation/v1/gw-01/commands/node-01
+
+user backend-irrigation
+topic read irrigation/v1/gw-01/telemetry
+topic read irrigation/v1/gw-01/heartbeat
+topic read irrigation/v1/gw-01/acks
+topic read irrigation/v1/gw-01/status
+topic write irrigation/v1/gw-01/commands/node-01

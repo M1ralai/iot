@@ -1,0 +1,20 @@
+{
+  "v": 2,
+  "type": "heartbeat",
+  "origin": 1,
+  "destination": 3,
+  "hops": 0,
+  "ttl": 2,
+  "boot_id": "0102030405060708",
+  "seq": 7,
+  "command_id": "0000000000000000",
+  "run_id": "0000000000000000",
+  "target_boot_id": "0000000000000000",
+  "payload": {
+    "arm_nonce": "33445566778899aa",
+    "pump_output_on": false,
+    "fault_code": 0,
+    "calibration_revision": 1,
+    "uptime_ms": 12000
+  }
+}

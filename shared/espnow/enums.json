@@ -1,0 +1,46 @@
+{
+  "type": {
+    "telemetry": 1,
+    "heartbeat": 2,
+    "start": 3,
+    "permit": 4,
+    "stop": 5,
+    "ack": 6
+  },
+  "quality": {
+    "valid": 0,
+    "uncalibrated": 1,
+    "disconnected": 2,
+    "saturated": 3,
+    "sensor_fault": 4
+  },
+  "ack_status": {
+    "accepted": 0,
+    "applied": 1,
+    "stopped": 2,
+    "completed": 3,
+    "rejected": 4,
+    "fault": 5
+  },
+  "reason": {
+    "ok": 0,
+    "expired": 1,
+    "boot_mismatch": 2,
+    "busy": 3,
+    "manual_stop": 4,
+    "lease_expired": 5,
+    "hard_cap": 6,
+    "sensor_fault": 7,
+    "cooldown": 8,
+    "invalid_frame": 9
+  },
+  "fault": {
+    "none": 0,
+    "sensor": 1,
+    "storage": 2,
+    "configuration": 3,
+    "internal": 4
+  },
+  "moisture_invalid_wire_value": 65535,
+  "unknown_fault_policy": "block_start"
+}

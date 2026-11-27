@@ -1,0 +1,97 @@
+{
+  "device": "D1",
+  "initial_state": "BOOT_LOCKOUT",
+  "states": [
+    "BOOT_LOCKOUT",
+    "READY",
+    "RUNNING",
+    "COOLDOWN",
+    "FAULT"
+  ],
+  "transitions": [
+    {
+      "from": "BOOT_LOCKOUT",
+      "event": "boot_lockout_elapsed_and_sensor_valid",
+      "to": "READY",
+      "output_on": false
+    },
+    {
+      "from": "READY",
+      "event": "validated_start_and_nvs_write_success",
+      "to": "RUNNING",
+      "output_on": true
+    },
+    {
+      "from": "RUNNING",
+      "event": "fresh_permit_for_active_run",
+      "to": "RUNNING",
+      "output_on": true
+    },
+    {
+      "from": "RUNNING",
+      "event": "stop",
+      "to": "COOLDOWN",
+      "output_on": false
+    },
+    {
+      "from": "RUNNING",
+      "event": "requested_duration_elapsed",
+      "to": "COOLDOWN",
+      "output_on": false
+    },
+    {
+      "from": "RUNNING",
+      "event": "hard_cap_elapsed",
+      "to": "COOLDOWN",
+      "output_on": false
+    },
+    {
+      "from": "RUNNING",
+      "event": "lease_expired",
+      "to": "COOLDOWN",
+      "output_on": false
+    },
+    {
+      "from": "RUNNING",
+      "event": "moisture_target_met",
+      "to": "COOLDOWN",
+      "output_on": false
+    },
+    {
+      "from": "COOLDOWN",
+      "event": "cooldown_elapsed_and_sensor_valid",
+      "to": "READY",
+      "output_on": false
+    },
+    {
+      "from": "*",
+      "event": "sensor_storage_config_or_internal_fault",
+      "to": "FAULT",
+      "output_on": false
+    },
+    {
+      "from": "FAULT",
+      "event": "operator_verified_fault_clear",
+      "to": "BOOT_LOCKOUT",
+      "output_on": false
+    },
+    {
+      "from": "*",
+      "event": "reboot",
+      "to": "BOOT_LOCKOUT",
+      "output_on": false
+    }
+  ],
+  "priority": [
+    "output_off_on_fault_or_reset",
+    "stop_and_terminal_deadlines",
+    "validated_permit",
+    "validated_start"
+  ],
+  "notes": [
+    "BOOT_LOCKOUT applies on every reboot for 30 minutes.",
+    "MANUAL_STOP and AUTO are backend modes; START never bypasses D1 guards.",
+    "Duplicate START returns the cached result and does not enter RUNNING again.",
+    "Transitions describe requirements, not an implemented firmware state machine."
+  ]
+}

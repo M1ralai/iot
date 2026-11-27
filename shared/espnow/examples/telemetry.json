@@ -1,0 +1,21 @@
+{
+  "v": 2,
+  "type": "telemetry",
+  "origin": 1,
+  "destination": 3,
+  "hops": 0,
+  "ttl": 2,
+  "boot_id": "0102030405060708",
+  "seq": 7,
+  "command_id": "0000000000000000",
+  "run_id": "0000000000000000",
+  "target_boot_id": "0000000000000000",
+  "payload": {
+    "adc_raw": 2400,
+    "moisture_pct": 35.5,
+    "quality": "valid",
+    "calibration_revision": 1,
+    "sample_age_ms": 0,
+    "uptime_ms": 12000
+  }
+}

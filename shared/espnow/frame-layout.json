@@ -1,0 +1,119 @@
+{
+  "version": 2,
+  "frame_bytes": 80,
+  "endianness": "little",
+  "fields": [
+    {
+      "name": "magic",
+      "offset": 0,
+      "bytes": 2,
+      "encoding": "ASCII IR"
+    },
+    {
+      "name": "version",
+      "offset": 2,
+      "bytes": 1,
+      "encoding": "uint8 = 2"
+    },
+    {
+      "name": "type",
+      "offset": 3,
+      "bytes": 1,
+      "encoding": "uint8 enum"
+    },
+    {
+      "name": "origin",
+      "offset": 4,
+      "bytes": 1,
+      "encoding": "uint8"
+    },
+    {
+      "name": "destination",
+      "offset": 5,
+      "bytes": 1,
+      "encoding": "uint8"
+    },
+    {
+      "name": "hops",
+      "offset": 6,
+      "bytes": 1,
+      "encoding": "uint8"
+    },
+    {
+      "name": "ttl",
+      "offset": 7,
+      "bytes": 1,
+      "encoding": "uint8"
+    },
+    {
+      "name": "boot_id",
+      "offset": 8,
+      "bytes": 8,
+      "encoding": "uint64"
+    },
+    {
+      "name": "seq",
+      "offset": 16,
+      "bytes": 4,
+      "encoding": "uint32"
+    },
+    {
+      "name": "command_id",
+      "offset": 20,
+      "bytes": 8,
+      "encoding": "uint64"
+    },
+    {
+      "name": "run_id",
+      "offset": 28,
+      "bytes": 8,
+      "encoding": "uint64"
+    },
+    {
+      "name": "target_boot_id",
+      "offset": 36,
+      "bytes": 8,
+      "encoding": "uint64"
+    },
+    {
+      "name": "payload_len",
+      "offset": 44,
+      "bytes": 1,
+      "encoding": "uint8"
+    },
+    {
+      "name": "flags",
+      "offset": 45,
+      "bytes": 1,
+      "encoding": "zero"
+    },
+    {
+      "name": "reserved",
+      "offset": 46,
+      "bytes": 2,
+      "encoding": "zero"
+    },
+    {
+      "name": "payload",
+      "offset": 48,
+      "bytes": 32,
+      "encoding": "type-specific; unused bytes zero"
+    }
+  ],
+  "payload_formats": {
+    "telemetry": "<HHBHII",
+    "heartbeat": "<QBBHI",
+    "start": "<QHH",
+    "permit": "<QH",
+    "stop": "<",
+    "ack": "<BBHI"
+  },
+  "payload_sizes": {
+    "telemetry": 15,
+    "heartbeat": 16,
+    "start": 12,
+    "permit": 10,
+    "stop": 0,
+    "ack": 8
+  }
+}
