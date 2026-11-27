@@ -1,0 +1,544 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation:shared:frame:v2",
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 2
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "telemetry",
+        "heartbeat",
+        "start",
+        "permit",
+        "stop",
+        "ack"
+      ]
+    },
+    "origin": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "destination": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "hops": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "ttl": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "boot_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$",
+      "not": {
+        "const": "0000000000000000"
+      }
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "command_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "target_boot_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "payload": {}
+  },
+  "required": [
+    "v",
+    "type",
+    "origin",
+    "destination",
+    "hops",
+    "ttl",
+    "boot_id",
+    "seq",
+    "command_id",
+    "run_id",
+    "target_boot_id",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "hops": {
+              "const": 0
+            },
+            "ttl": {
+              "const": 2
+            }
+          }
+        },
+        {
+          "properties": {
+            "hops": {
+              "const": 1
+            },
+            "ttl": {
+              "const": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "hops": {
+              "const": 2
+            },
+            "ttl": {
+              "const": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "telemetry"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "adc_raw": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4095
+              },
+              "moisture_pct": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100,
+                "multipleOf": 0.01
+              },
+              "quality": {
+                "type": "string",
+                "enum": [
+                  "valid",
+                  "uncalibrated",
+                  "disconnected",
+                  "saturated",
+                  "sensor_fault"
+                ]
+              },
+              "calibration_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "sample_age_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "uptime_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "required": [
+              "adc_raw",
+              "moisture_pct",
+              "quality",
+              "calibration_revision",
+              "sample_age_ms",
+              "uptime_ms"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "quality": {
+                      "const": "valid"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "moisture_pct": {
+                      "type": "number"
+                    },
+                    "calibration_revision": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 65535
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "moisture_pct": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "origin": {
+            "const": 1
+          },
+          "destination": {
+            "const": 3
+          },
+          "target_boot_id": {
+            "const": "0000000000000000"
+          },
+          "command_id": {
+            "const": "0000000000000000"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "heartbeat"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "arm_nonce": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{16}$",
+                "not": {
+                  "const": "0000000000000000"
+                }
+              },
+              "pump_output_on": {
+                "type": "boolean"
+              },
+              "fault_code": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 255
+              },
+              "calibration_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "uptime_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "required": [
+              "arm_nonce",
+              "pump_output_on",
+              "fault_code",
+              "calibration_revision",
+              "uptime_ms"
+            ],
+            "additionalProperties": false
+          },
+          "origin": {
+            "const": 1
+          },
+          "destination": {
+            "const": 3
+          },
+          "target_boot_id": {
+            "const": "0000000000000000"
+          },
+          "command_id": {
+            "const": "0000000000000000"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "start"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "arm_nonce": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{16}$",
+                "not": {
+                  "const": "0000000000000000"
+                }
+              },
+              "duration_ms": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 25000
+              },
+              "permit_budget_ms": {
+                "const": 3000
+              }
+            },
+            "required": [
+              "arm_nonce",
+              "duration_ms",
+              "permit_budget_ms"
+            ],
+            "additionalProperties": false
+          },
+          "origin": {
+            "const": 3
+          },
+          "destination": {
+            "const": 1
+          },
+          "command_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "run_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "target_boot_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "permit"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "arm_nonce": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{16}$",
+                "not": {
+                  "const": "0000000000000000"
+                }
+              },
+              "permit_budget_ms": {
+                "const": 3000
+              }
+            },
+            "required": [
+              "arm_nonce",
+              "permit_budget_ms"
+            ],
+            "additionalProperties": false
+          },
+          "origin": {
+            "const": 3
+          },
+          "destination": {
+            "const": 1
+          },
+          "command_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "run_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "target_boot_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stop"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          },
+          "origin": {
+            "const": 3
+          },
+          "destination": {
+            "const": 1
+          },
+          "command_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "run_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "target_boot_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "accepted",
+                  "applied",
+                  "stopped",
+                  "completed",
+                  "rejected",
+                  "fault"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "ok",
+                  "expired",
+                  "boot_mismatch",
+                  "busy",
+                  "manual_stop",
+                  "lease_expired",
+                  "hard_cap",
+                  "sensor_fault",
+                  "cooldown",
+                  "invalid_frame"
+                ]
+              },
+              "elapsed_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "uptime_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "required": [
+              "status",
+              "reason",
+              "elapsed_ms",
+              "uptime_ms"
+            ],
+            "additionalProperties": false
+          },
+          "origin": {
+            "const": 1
+          },
+          "destination": {
+            "const": 3
+          },
+          "target_boot_id": {
+            "const": "0000000000000000"
+          },
+          "command_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          },
+          "run_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{16}$",
+            "not": {
+              "const": "0000000000000000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

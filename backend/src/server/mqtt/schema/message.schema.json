@@ -1,0 +1,648 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation:shared:mqtt:v1",
+  "title": "Go backend and ESP32 gateway MQTT envelope v1",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "telemetry"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "historical": {
+          "type": "boolean"
+        },
+        "gateway_queue_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "last_hop_rssi_dbm": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": -127,
+          "maximum": 0
+        },
+        "frame": {
+          "allOf": [
+            {
+              "$ref": "urn:irrigation:shared:frame:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "const": "telemetry"
+                },
+                "hops": {
+                  "const": 2
+                },
+                "ttl": {
+                  "const": 0
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "historical",
+        "gateway_queue_age_ms",
+        "last_hop_rssi_dbm",
+        "frame"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "heartbeat"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "historical": {
+          "const": false
+        },
+        "gateway_queue_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "last_hop_rssi_dbm": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": -127,
+          "maximum": 0
+        },
+        "frame": {
+          "allOf": [
+            {
+              "$ref": "urn:irrigation:shared:frame:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "const": "heartbeat"
+                },
+                "hops": {
+                  "const": 2
+                },
+                "ttl": {
+                  "const": 0
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "historical",
+        "gateway_queue_age_ms",
+        "last_hop_rssi_dbm",
+        "frame"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "ack"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "historical": {
+          "const": false
+        },
+        "gateway_queue_age_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "last_hop_rssi_dbm": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": -127,
+          "maximum": 0
+        },
+        "frame": {
+          "allOf": [
+            {
+              "$ref": "urn:irrigation:shared:frame:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "const": "ack"
+                },
+                "hops": {
+                  "const": 2
+                },
+                "ttl": {
+                  "const": 0
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "historical",
+        "gateway_queue_age_ms",
+        "last_hop_rssi_dbm",
+        "frame"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "start"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "backend_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "target_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "arm_nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$",
+              "not": {
+                "const": "0000000000000000"
+              }
+            },
+            "duration_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 25000
+            },
+            "permit_budget_ms": {
+              "const": 3000
+            }
+          },
+          "required": [
+            "arm_nonce",
+            "duration_ms",
+            "permit_budget_ms"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "backend_epoch",
+        "command_id",
+        "run_id",
+        "target_boot_id",
+        "issued_at",
+        "expires_at",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "permit"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "backend_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "target_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "arm_nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{16}$",
+              "not": {
+                "const": "0000000000000000"
+              }
+            },
+            "permit_budget_ms": {
+              "const": 3000
+            }
+          },
+          "required": [
+            "arm_nonce",
+            "permit_budget_ms"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "backend_epoch",
+        "command_id",
+        "run_id",
+        "target_boot_id",
+        "issued_at",
+        "expires_at",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "stop"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "node_id": {
+          "const": "node-01"
+        },
+        "backend_epoch": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "target_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "node_id",
+        "backend_epoch",
+        "command_id",
+        "run_id",
+        "target_boot_id",
+        "issued_at",
+        "expires_at",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "status"
+        },
+        "gateway_id": {
+          "const": "gw-01"
+        },
+        "gateway_boot_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "gateway_session_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$",
+          "not": {
+            "const": "0000000000000000"
+          }
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "online",
+            "offline"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "gateway_id",
+        "gateway_boot_id",
+        "gateway_session_id",
+        "message_id",
+        "state"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

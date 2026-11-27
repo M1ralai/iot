@@ -1,44 +1,85 @@
+// Package server composes the REST and MQTT components and owns their
+// lifecycle.
 package server
 
 import (
-	"net/http"
+	"context"
+	"errors"
+	"fmt"
+	"log"
+	"time"
 
-	"github.com/M1ralai/iot/src/server/rest/middlewares/logger"
-	"github.com/M1ralai/iot/src/server/rest/modules/health"
 	"github.com/M1ralai/iot/src/server/mqtt"
+	"github.com/M1ralai/iot/src/server/mqtt/schema"
+	"github.com/M1ralai/iot/src/server/rest"
+	"github.com/M1ralai/iot/src/server/rest/modules/health"
 )
 
-type ServerCfg struct {
-	port     string
-	broker   string
-	clientId string
-}
-
-func NewServerConfig(port string, broker string, clientId string) ServerCfg {
-	return ServerCfg{
-		port:     port,
-		broker:   broker,
-		clientId: clientId,
-	}
-}
+const shutdownTimeout = 10 * time.Second
 
 type Server struct {
-	mux *http.ServeMux
-	cfg ServerCfg
-	m   *mqtt.MQTT
+	rest *rest.REST
+	mqtt *mqtt.MQTT
 }
 
-func NewServer(cfg ServerCfg) *Server {
-	mux := http.NewServeMux()
-	m := mqtt.New(cfg.broker, cfg.clientId)
-	return &Server{
-		mux: mux,
-		cfg: cfg,
-		m:   m,
+// New compiles the embedded message schemas and builds the components. It
+// performs no network I/O; a schema failure prevents startup.
+func New(cfg Config) (*Server, error) {
+	schemas, err := schema.Load()
+	if err != nil {
+		return nil, fmt.Errorf("load message schemas: %w", err)
 	}
+
+	m := mqtt.New(cfg.MQTT, schemas)
+
+	mqttCheck := health.Check{
+		Name: "mqtt",
+		Status: func() map[string]bool {
+			st := m.Status()
+			return map[string]bool{"connected": st.Connected, "subscribed": st.Subscribed}
+		},
+	}
+
+	return &Server{
+		rest: rest.New(cfg.RESTAddr, mqttCheck),
+		mqtt: m,
+	}, nil
 }
 
-func (s *Server) Run() {
-	s.mux.HandleFunc("/health", logger.LoggingHandler(health.HealthHandler))
-	http.ListenAndServe(s.cfg.port, s.mux)
+// MQTT exposes the MQTT component so application logic can publish commands.
+func (s *Server) MQTT() *mqtt.MQTT { return s.mqtt }
+
+// Run starts MQTT, then REST, and blocks until ctx is cancelled or a component
+// fails, then shuts both down. If startup fails, components that already
+// started are stopped. It returns nil on a clean, context-triggered shutdown.
+func (s *Server) Run(ctx context.Context) error {
+	if err := s.mqtt.Connect(ctx); err != nil {
+		return fmt.Errorf("start mqtt: %w", err)
+	}
+	if err := s.rest.Start(); err != nil {
+		s.mqtt.Close()
+		return fmt.Errorf("start rest: %w", err)
+	}
+	log.Printf("server: started")
+
+	var runErr error
+	select {
+	case <-ctx.Done():
+		log.Printf("server: shutting down: %v", context.Cause(ctx))
+	case err := <-s.rest.Err():
+		runErr = err
+		log.Printf("server: shutting down after component failure")
+	}
+
+	return errors.Join(runErr, s.shutdown())
+}
+
+// shutdown stops REST first so no request can use MQTT while it closes.
+func (s *Server) shutdown() error {
+	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+	defer cancel()
+
+	err := s.rest.Shutdown(ctx)
+	s.mqtt.Close()
+	return err
 }
